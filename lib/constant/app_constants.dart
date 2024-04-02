@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/observers/route_observer.dart';
@@ -86,65 +83,6 @@ nonVisibility() {
   return Container();
 }
 
-// class AITitle extends StatelessWidget {
-//   const AITitle({
-//     super.key,
-//     required this.text,
-//     this.showBackArrow = true,
-//   });
-//
-//   final String text;
-//   final bool showBackArrow;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         BackArrow(
-//           showBackArrow: showBackArrow,
-//         ),
-//         Text(
-//           text,
-//           style: const TextStyle(
-//               fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "Arial"),
-//           overflow: TextOverflow.ellipsis,
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-// class BackArrow extends GetView<MasterController> {
-//   const BackArrow({super.key, required this.showBackArrow});
-//
-//   final bool showBackArrow;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetBuilder<MasterController>(builder: (context) {
-//       return Visibility(
-//         visible: showBackArrow,
-//         child: AIToolTip(
-//           message: 'Back',
-//           child: IconButton(
-//               constraints: const BoxConstraints(),
-//               padding: EdgeInsets.zero,
-//               onPressed: pageRouteCollections.isEmpty
-//                   ? null
-//                   : () {
-//                 routeBack();
-//               },
-//               icon: Icon(
-//                 Icons.keyboard_arrow_left,
-//                 color: pageRouteCollections.isEmpty ? Colors.grey : mainColor,
-//                 size: 25,
-//               )),
-//         ),
-//       );
-//     });
-//   }
-// }
-
 class PMDButton extends StatelessWidget {
   final String closeButtonName;
   final Function(BuildContext) closeEvent;
@@ -177,37 +115,6 @@ class PMDButton extends StatelessWidget {
   }
 }
 
-// class PMDButton2 extends StatelessWidget {
-//   final String closeButtonName;
-//   final Function(BuildContext) closeEvent;
-//
-//   const PMDButton2({
-//     Key? key,
-//     required this.closeButtonName,
-//     required this.closeEvent,
-//   }) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Align(
-//       alignment: Alignment.center,
-//       child: InkWell(
-//         onTap: () => closeEvent(context),
-//         child: Card(
-//           elevation: 5,
-//           color: pmdColor,
-//           child: SizedBox(
-//             width: 250,
-//             height: 40,
-//             child: Center(
-//               child: ButtonText1(buttonText:closeButtonName),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 // Using Material UI Design
 class PMDButton2 extends StatelessWidget {
   final String closeButtonName;
@@ -447,7 +354,74 @@ class PMDButton1 extends StatelessWidget {
     );
   }
 }
+class PMDButton3 extends StatelessWidget {
+  final bool saveEnabled;
+  final Function(BuildContext) saveEvent;
+  final Function(BuildContext) cancelEvent;
+  final String saveButtonName;
+  final String cancelButtonName;
+  final bool saveButtonVisible;
+  const PMDButton3({
+    Key? key,
+    required this.saveEnabled,
+    required this.saveEvent,
+    required this.cancelEvent,
+    this.cancelButtonName = 'Cancel',
+    this.saveButtonName = 'OK',
+    this.saveButtonVisible = true,
+  }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            cancelEvent(context);
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green, // Change color to your desired color
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              side: const BorderSide(color: Colors.blueAccent), // Border color
+            ),
+          ),
+          child: Text(
+            cancelButtonName,
+            style: const TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+        ),
+        const SizedBox(width: 20), // Use const SizedBox for better performance
+        Visibility(
+          visible: saveButtonVisible,
+          child: ElevatedButton(
+            onPressed: saveEnabled ? () => saveEvent(context) : null,
+            style: ElevatedButton.styleFrom(
+              primary: saveEnabled ? Color(0xfff7892b): Colors.blueGrey,
+              // Change color based on saveEnabled
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                side: const BorderSide(color: Colors.blueAccent), // Border color
+              ),
+            ),
+            child: saveEnabled
+                ? Text(
+              saveButtonName,
+              style: const TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+            )
+                : const CircularProgressIndicator(
+              backgroundColor: Colors.white, // Change loader color
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
 class ScanButton extends StatelessWidget {
   final bool saveEnabled;
   final Function saveEvent;

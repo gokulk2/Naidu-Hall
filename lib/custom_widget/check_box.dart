@@ -42,7 +42,7 @@ class _RSCheckBoxState1 extends State<RSCheckBox1> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 5.0),
-            child: Text(widget.displayName),
+            child: Text(widget.displayName , style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
           ),
         ],
       ),

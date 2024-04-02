@@ -40,7 +40,7 @@ class ApiChecker {
       "",
       "",
       maxWidth: 300,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       backgroundColor: Colors.green,
       colorText: Colors.white,
       isDismissible: true,
@@ -196,46 +196,121 @@ class ApiChecker {
       ),
     );
   }
-
   void functionAlert(String title, String message, Function callBack) {
     Get.defaultDialog(
       title: '',
       backgroundColor: Colors.transparent,
       content: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title),
-            divider(),
-            Text(message),
-            sizedBox(),
-            Center(
-              child: PMDButton1(
-                  saveButtonName: 'OK',
-                  saveButtonVisible: true,
-                  saveEnabled: true,
-                  saveEvent: (ctx) {
-                    Get.back();
-                    callBack();
-                  },
-                  operatorEvent: (ctx){
-                   Get.back();
-                 },
-                  cancelEvent: (ctx) {
-                    Get.back();
-                  },),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Divider(
+              color: Colors.grey[400],
+              thickness: 1,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              message,
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Get.back();
+                      Get.toNamed('/');
+                      callBack(true); // Yes option selected
+                    },
+                    child: const Text(
+                      'Yes',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 20), // Adjust the width based on your preference
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Get.back();
+                      callBack(false); // No option selected
+                    },
+                    child: const Text(
+                      'No',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
       ),
     );
   }
+
+  // void functionAlert(String title, String message, Function callBack) {
+  //   Get.defaultDialog(
+  //     title: '',
+  //     backgroundColor: Colors.transparent,
+  //     content: Container(
+  //       padding: const EdgeInsets.all(10),
+  //       decoration: BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.circular(5),
+  //       ),
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.start,
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(title),
+  //           divider(),
+  //           Text(message),
+  //           sizedBox(),
+  //           Center(
+  //             child: PMDButton3(
+  //                 saveButtonName: 'OK',
+  //                 saveButtonVisible: true,
+  //                 saveEnabled: true,
+  //                 saveEvent: (ctx) {
+  //                   Get.back();
+  //                   callBack();
+  //                 },
+  //                 cancelEvent: (ctx) {
+  //                   Get.back();
+  //                 },),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   confirmDialog(BuildContext context,
       {String yesButtonName = "Yes",

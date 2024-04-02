@@ -17,7 +17,7 @@ class ExitAlertDialog extends StatelessWidget {
         ),
       ),
       content: const Text(
-        'Do you want to exit the app?',
+        'Do you want to exit the Entry ?',
         style: TextStyle(
           fontSize: 16.0,
         ),

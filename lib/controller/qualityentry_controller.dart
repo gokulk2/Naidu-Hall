@@ -1,10 +1,10 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../constant/app_constants.dart';
 import '../constant/variable_constant.dart';
 import '../model/response/api_checker.dart';
 import '../model/response/api_response.dart';
+import '../repository/admin_repo.dart';
 import '../repository/common_repo.dart';
 import '../repository/login_repo.dart';
 import '../repository/shared_repo.dart';
@@ -12,6 +12,7 @@ import '../repository/signalrrepo.dart';
 import '../screen/entry_screen.dart';
 
 class QualityEntryController extends GetxController {
+  Map<String, dynamic> saveQualityModelMap = {};
   TextEditingController mcController = TextEditingController();
   TextEditingController operatorController = TextEditingController();
   TextEditingController qcQtyController = TextEditingController();
@@ -21,21 +22,13 @@ class QualityEntryController extends GetxController {
     'Option 3',
   ];
 
-  // Default value for the dropdown
-  String dropdownValue = 'Option 1'; // Ensure this value is unique among dropdown items
+  String dropdownValue = 'Option 1';
 
   bool checkBoxValue = false;
   bool isLoading = false;
   final formKey = GlobalKey<FormState>();
 
-  onBuilderInit() async {
-    // checkBoxValue = SharedRepo().getRememberCheck();
-    // if (checkBoxValue) {
-    //   userNameController.text = SharedRepo().getUserName();
-    //   passwordController.text = SharedRepo().getUserPassword();
-    // }
-    // update();
-  }
+  onBuilderInit() async {}
 
   @override
   void onClose() {
@@ -45,24 +38,31 @@ class QualityEntryController extends GetxController {
     qcQtyController.dispose();
   }
 
-  Future<void> login() async {
+  Future<void> saveQualityData(BuildContext context) async {
+    formKey.currentState!.save();
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    saveQualityModelMap['machineNo'] = mcController.text;
+    saveQualityModelMap['operator'] = operatorController.text;
+    saveQualityModelMap['qc_Quantity'] = qcQtyController.text;
+    saveQualityModelMap['reason'] = dropdownValue;
+    saveQualityModelMap['rejection'] = dropdownValue;
+    saveQualityModelMap['reworkStation'] = dropdownValue;
     try {
-      formKey.currentState!.save();
-      if (!formKey.currentState!.validate()) {
-        return;
+      ApiResponse apiResponse =
+          await AdminRepo().saveQuality(saveQualityModelMap);
+      if (checkAPIResponse(apiResponse)) {
+        ApiChecker().successMessageGetX(
+            header: 'Quality Data', message: 'Saved Successfully');
       }
-      isLoading = true;
-      update();
-
     } catch (e) {
       rapidSoftPrint(e);
       Map<String, dynamic> exceptionModelMap = {};
-      exceptionModelMap['methodName'] = 'login';
-      exceptionModelMap['parameter'] = ' ';
+      exceptionModelMap['methodName'] = 'saveQualityData';
+      exceptionModelMap['parameter'] = '$saveQualityModelMap';
       exceptionModelMap['exMessage'] = '$e';
-     // CommonRepo().saveUIException(exceptionModelMap);
     }
-    isLoading = false;
     update();
   }
 }

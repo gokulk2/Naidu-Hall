@@ -1,7 +1,13 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:mobileapp/constant/app_constants.dart';
-// import 'package:mobileapp/constant/color_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:mobileapp/constant/app_constants.dart';
+import 'package:mobileapp/constant/color_constants.dart';
+
+import '../custom_widget/alert_message.dart';
+import '../model/response/api_checker.dart';
+import '../repository/signalrrepo.dart';
+
 //
 // class EntryScreen extends StatelessWidget {
 //   const EntryScreen({Key? key});
@@ -82,13 +88,11 @@
 //     );
 //   }
 // }
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:mobileapp/constant/color_constants.dart';
-
-import '../custom_widget/alert_message.dart';
-
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:get/get_core/src/get_main.dart';
+// import 'package:mobileapp/constant/color_constants.dart';
+//
 // class EntryScreen extends StatelessWidget {
 //   const EntryScreen({super.key});
 //
@@ -106,7 +110,6 @@ import '../custom_widget/alert_message.dart';
 //             ElevatedButton(
 //               onPressed: () {
 //                 Get.toNamed('/production');
-//                 // Navigate to production entry screen
 //               },
 //               style: ElevatedButton.styleFrom(
 //                 primary: pmdButtonColor, // Background color
@@ -168,21 +171,45 @@ class EntryScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Entry Screen'),
           backgroundColor: Colors.red,
+          actions: [
+            IconButton(
+              onPressed: () {
+                ApiChecker().functionAlert(
+                  "Logout",
+                  "Are you sure want to Logout?",
+                  () {
+                    SignalRRepo.terminateConnection();
+                    //Navigator.pushNamed(context, '/login');
+                  },
+                );
+              },
+              icon: const Icon(
+                FontAwesomeIcons.powerOff,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          ],
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Text('Select the Entry Screen?',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 80),
               ElevatedButton(
                 onPressed: () {
                   Get.toNamed('/production');
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: pmdButtonColor,
+                  primary: Colors.blue,
                   onPrimary: Colors.white,
-                  minimumSize: const Size(150, 50),
+                  minimumSize: const Size(350, 50),
                 ),
-                child: const Text('Production Entry'),
+                child: const Text('Production Entry',
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(
                 height: 70,
@@ -192,11 +219,13 @@ class EntryScreen extends StatelessWidget {
                   Get.toNamed('/quality');
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: pmdButtonColor,
+                  primary: Colors.blue,
                   onPrimary: Colors.white,
-                  minimumSize: const Size(150, 50),
+                  minimumSize: const Size(350, 50),
                 ),
-                child: const Text('Quality Entry'),
+                child: const Text('Quality Entry',
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(
                 height: 70,
@@ -206,11 +235,13 @@ class EntryScreen extends StatelessWidget {
                   Get.toNamed('/breakDown');
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: pmdButtonColor,
+                  primary: Colors.blue,
                   onPrimary: Colors.white,
-                  minimumSize: const Size(150, 50),
+                  minimumSize: const Size(350, 50),
                 ),
-                child: const Text('Breakdown Entry'),
+                child: const Text('Breakdown Entry',
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -219,3 +250,63 @@ class EntryScreen extends StatelessWidget {
     );
   }
 }
+// class EntryScreen extends StatelessWidget {
+//   const EntryScreen({Key? key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MasterScreen(
+//       // Assuming MasterScreen provides a scaffold
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             const Text(
+//               'Select the Entry Screen?',
+//               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+//             ),
+//             const SizedBox(height: 80),
+//             ElevatedButton(
+//               onPressed: () => Navigator.pushNamed(context, '/production'),
+//               style: ElevatedButton.styleFrom(
+//                 primary: Colors.blue,
+//                 onPrimary: Colors.white,
+//                 minimumSize: const Size(350, 50),
+//               ),
+//               child: const Text(
+//                 'Production Entry',
+//                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//               ),
+//             ),
+//             const SizedBox(height: 70),
+//             ElevatedButton(
+//               onPressed: () => Navigator.pushNamed(context, '/quality'),
+//               style: ElevatedButton.styleFrom(
+//                 primary: Colors.blue,
+//                 onPrimary: Colors.white,
+//                 minimumSize: const Size(350, 50),
+//               ),
+//               child: const Text(
+//                 'Quality Entry',
+//                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//               ),
+//             ),
+//             const SizedBox(height: 70),
+//             ElevatedButton(
+//               onPressed: () => Navigator.pushNamed(context, '/breakDown'),
+//               style: ElevatedButton.styleFrom(
+//                 primary: Colors.blue,
+//                 onPrimary: Colors.white,
+//                 minimumSize: const Size(350, 50),
+//               ),
+//               child: const Text(
+//                 'Breakdown Entry',
+//                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ), child: null,
+//     );
+//   }
+// }

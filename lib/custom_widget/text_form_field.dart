@@ -7,52 +7,6 @@ import '../enum/validation_type.dart';
 
 //Using Material UI Design
 
-// class CustomTextField extends StatelessWidget {
-//   final String? hintText;
-//   final IconData? prefixIcon;
-//   final bool obscureText;
-//   final ValueChanged<String>? onChanged;
-//   final ValueChanged<String>? onSubmitted;
-//   final FormFieldValidator<String>? validator;
-//   final TextEditingController? textEditingController;
-//   final TextInputType? keyboardType;
-//
-//   const CustomTextField({
-//     Key? key,
-//     this.hintText,
-//     this.prefixIcon,
-//     this.obscureText = false,
-//     this.onChanged,
-//     this.onSubmitted,
-//     this.validator,
-//     this.textEditingController,
-//     this.keyboardType,
-//   }) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       controller: textEditingController,
-//       keyboardType: keyboardType,
-//       obscureText: obscureText,
-//       onChanged: onChanged,
-//       onFieldSubmitted: onSubmitted,
-//       validator: validator,
-//       decoration: InputDecoration(
-//         hintText: hintText,
-//         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
-//         filled: true,
-//         fillColor: Colors.grey[200],
-//         border: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(10.0),
-//           borderSide: BorderSide.none,
-//         ),
-//         contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
-//         errorText: validator != null ? validator!(textEditingController!.text) : null,
-//       ),
-//     );
-//   }
-// }
 class CustomTextField extends StatefulWidget {
   final String? hintText;
   final IconData? prefixIcon;
@@ -102,7 +56,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         _errorText = null;
       } else {
         // If the field doesn't have focus, show error only if text is empty
-        _errorText = widget.validator != null && widget.textEditingController!.text.isEmpty
+        _errorText = widget.validator != null &&
+                widget.textEditingController!.text.isEmpty
             ? widget.validator!(widget.textEditingController!.text)
             : null;
       }
@@ -126,76 +81,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
         errorText: _errorText,
       ),
     );
   }
 }
 
-// class CustomPasswordTextField extends StatefulWidget {
-//   final String? hintText;
-//   final IconData? prefixIcon;
-//   final bool obscureText;
-//   final ValueChanged<String>? onChanged;
-//   final ValueChanged<String>? onSubmitted;
-//   final FormFieldValidator<String>? validator;
-//   final TextEditingController? textEditingController;
-//   final TextInputType? keyboardType;
-//
-//   const CustomPasswordTextField({
-//     Key? key,
-//     this.hintText,
-//     this.prefixIcon,
-//     this.obscureText = false,
-//     this.onChanged,
-//     this.onSubmitted,
-//     this.validator,
-//     this.textEditingController,
-//     this.keyboardType,
-//   }) : super(key: key);
-//
-//   @override
-//   _CustomPasswordTextFieldState createState() => _CustomPasswordTextFieldState();
-// }
-//
-// class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
-//   bool _obscureText = true;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       controller: widget.textEditingController,
-//       keyboardType: widget.keyboardType,
-//       obscureText: _obscureText,
-//       onChanged: widget.onChanged,
-//       onFieldSubmitted: widget.onSubmitted,
-//       validator: widget.validator,
-//       decoration: InputDecoration(
-//         hintText: widget.hintText,
-//         prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
-//         suffixIcon: widget.obscureText
-//             ? IconButton(
-//           icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-//           onPressed: () {
-//             setState(() {
-//               _obscureText = !_obscureText;
-//             });
-//           },
-//         )
-//             : null,
-//         filled: true,
-//         fillColor: Colors.grey[200],
-//         border: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(10.0),
-//           borderSide: BorderSide.none,
-//         ),
-//         contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
-//         errorText: widget.validator != null ? widget.validator!(widget.textEditingController!.text) : null,
-//       ),
-//     );
-//   }
-// }
 class CustomPasswordTextField extends StatefulWidget {
   final String? hintText;
   final IconData? prefixIcon;
@@ -219,7 +112,8 @@ class CustomPasswordTextField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomPasswordTextFieldState createState() => _CustomPasswordTextFieldState();
+  _CustomPasswordTextFieldState createState() =>
+      _CustomPasswordTextFieldState();
 }
 
 class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
@@ -248,7 +142,8 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
         _errorText = null;
       } else {
         // If the field doesn't have focus, show error only if text is empty
-        _errorText = widget.validator != null && widget.textEditingController!.text.isEmpty
+        _errorText = widget.validator != null &&
+                widget.textEditingController!.text.isEmpty
             ? widget.validator!(widget.textEditingController!.text)
             : null;
       }
@@ -276,13 +171,14 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
         prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
         suffixIcon: widget.obscureText
             ? IconButton(
-          icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-        )
+                icon: Icon(
+                    _obscureText ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              )
             : null,
         filled: true,
         fillColor: Colors.grey[200],
@@ -290,7 +186,8 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
         errorText: _errorText,
       ),
     );

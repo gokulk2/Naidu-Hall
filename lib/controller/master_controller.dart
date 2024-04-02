@@ -23,35 +23,9 @@ class MasterController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    //getDomainValue();
-    //getClientConfiguration();
-    //getFieldConfiguration();
-    // getDepartmentForDropdown();
-    //  getNatureForDropdown();
-    //  getDomainForDropdown();
-    //  getRoleForDropdown();
-    //  getAudioForDropdown();
-    //getAllGridPersonalization();
   }
 
-  // Future<void> getDomainValue() async {
-  //   try {
-  //     ApiResponse apiResponse = await CommonRepo().getDomainValues();
-  //     if (checkAPIResponse(apiResponse)) {
-  //       domainValueLists.clear();
-  //       for (var value in apiResponse.response!.data) {
-  //         domainValueLists.add(value);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     rapidSoftPrint(e);
-  //     Map<String, dynamic> exceptionModelMap = {};
-  //     exceptionModelMap['methodName'] = 'getDomainValue';
-  //     exceptionModelMap['parameter'] = '$domainValueLists';
-  //     exceptionModelMap['exMessage'] = '$e';
-  //     CommonRepo().saveUIException(exceptionModelMap);
-  //   }
-  // }
+
 
   // Future<void> getClientConfiguration() async {
   //   try {

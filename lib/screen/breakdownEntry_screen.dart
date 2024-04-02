@@ -157,11 +157,14 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mobileapp/custom_widget/text_form_field.dart';
 import '../constant/app_constants.dart';
 import '../controller/breakdownentry_controller.dart';
 import '../custom_widget/alert_message.dart';
+import '../model/response/api_checker.dart';
+import '../repository/signalrrepo.dart';
 
 class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
   BreakDownEntryScreen({Key? key}) : super(key: key);
@@ -187,182 +190,190 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
             return Scaffold(
               appBar: AppBar(
                 title: const Text('Breakdown Entry'),
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.red,actions: [
+                IconButton(
+                  onPressed: () {
+                    ApiChecker().functionAlert(
+                      "Logout",
+                      "Are you sure want to Logout?",
+                          () {
+                        SignalRRepo.terminateConnection();
+                        //Navigator.pushNamed(context, '/login');
+                      },
+                    );
+                  },
+                  icon: const Icon(
+                    FontAwesomeIcons.powerOff,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ],
               ),
+
               body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.grey),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Icon(Icons.qr_code),
-                            SizedBox(width: 8),
-                            Text('Scan'),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'M/C #',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: controller.mcController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your text here',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
+                child: Form(
+                  key: controller.formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            // Implement scan functionality here
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.grey),
+                            minimumSize: MaterialStateProperty.all<Size>(
+                                const Size(400, 40)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(Icons.qr_code),
+                              SizedBox(width: 8),
+                              Text(
+                                'Scan',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Operator #',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: controller.operatorController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your text here',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'M/C #',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Qty',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: controller.qcQtyController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter your text here',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Reason',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      CustomDropdownFormField(
-                        value: controller.dropdownValue,
-                        items: controller.dropdownItems,
-                        onChanged: (value) {
-                          controller.dropdownValue = value!;
-                        },
-                      ),
-                      const SizedBox(height: 8),
-                      Visibility(
-                        visible: controller.selectedDropDownValue() &&
-                            controller.saveButtonVisible.value &&
-                            controller.dropdownValue != null &&
-                            controller.dropdownValue == 'Power Out',
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Status',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                        const SizedBox(height: 8),
+                        TextField(
+                          controller: controller.mcController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter M/C # here',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
                               ),
                             ),
-                            const SizedBox(height: 8),
-                            CustomDropdownFormField(
-                              value: controller.dropdownstatusValue,
-                              items: controller.dropdownstatusItems,
-                              onChanged: (value) {
-                                controller.operatorEvent(context);
-                              },
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Visibility(
-                        visible: controller.selectedDropDownValue() &&
-                            controller.saveButtonVisible.value &&
-                            controller.dropdownValue != null &&
-                            controller.dropdownValue == 'Partial No Load',
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Timing',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                        const SizedBox(height: 16),
+                        const Text(
+                          'Operator #',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextField(
+                          controller: controller.operatorController,
+                          decoration: const InputDecoration(
+                            hintText: 'Operator #',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
                               ),
                             ),
-                            const SizedBox(height: 8),
-                            CustomDropdownFormField(
-                              value: controller.dropdownValue1,
-                              items: controller.dropdownItems1,
-                              onChanged: (value) {
-                                controller.operatorEvent(context);
-                              },
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 40),
-                      const SizedBox(height: 8),
-                      PMDButton1(
-                        saveEnabled: true,
-                        cancelEvent: (context) {
-                          // Implement cancelEvent functionality
-                          controller.mcController.clear();
-                          controller.operatorController.clear();
-                          controller.qcQtyController.clear();
-                        },
-                        saveEvent: (context) {
-                          // Implement saveEvent functionality
-                        },
-                        operatorEvent: (context) {
-                          controller.operatorEvent(context);
-                          // Implement operatorEvent functionality
-                        },
-                        cancelButtonName: 'CLEAR',
-                        operatorButtonName: 'CONFIRM',
-                        saveButtonName: 'Change M/C',
-                        saveButtonVisible: controller.saveButtonVisible.value,
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Reason',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        CustomDropdownFormField(
+                          value: controller.dropdownValue,
+                          items: controller.dropdownItems,
+                          onChanged: (value) {
+                            controller.dropdownValue = value!;
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        Visibility(
+                          visible: controller.selectedDropDownValue() &&
+                              controller.saveButtonVisible.value &&
+                              controller.dropdownValue != null &&
+                              controller.dropdownValue == 'Power Out',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Status',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              CustomDropdownFormField(
+                                value: controller.dropdownStatusValue,
+                                items: controller.dropdownStatusItems,
+                                onChanged: (value) {
+                                  controller.operatorEvent(context);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Visibility(
+                          visible: controller.selectedDropDownValue() &&
+                              controller.saveButtonVisible.value &&
+                              controller.dropdownValue != null &&
+                              controller.dropdownValue == 'Partial No Load',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Timing',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              CustomDropdownFormField(
+                                value: controller.dropdownValue1,
+                                items: controller.dropdownItems1,
+                                onChanged: (value) {
+                                  controller.operatorEvent(context);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        const SizedBox(height: 8),
+                        PMDButton1(
+                          saveEnabled: true,
+                          cancelEvent: (context) {
+                            // Implement cancelEvent functionality
+                            controller.mcController.clear();
+                            controller.operatorController.clear();
+                          },
+                          saveEvent: (context) {
+                            controller.saveBreakDownData(context);
+                          },
+                          operatorEvent: (context) {
+                            controller.operatorEvent(context);
+                          },
+                          cancelButtonName: 'CLEAR',
+                          operatorButtonName: 'CONFIRM',
+                          saveButtonName: 'Change M/C',
+                          saveButtonVisible: controller.saveButtonVisible.value,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

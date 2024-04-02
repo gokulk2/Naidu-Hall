@@ -1,16 +1,24 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import '../constant/app_constants.dart';
-import '../repository/common_repo.dart';
+import '../model/response/api_checker.dart';
+import '../model/response/api_response.dart';
+import '../repository/admin_repo.dart';
 
 class ProductionEntryController extends GetxController {
+  final formKey = GlobalKey<FormState>();
+  Map<String, dynamic> saveProductionModelMap = {};
   TextEditingController mcController = TextEditingController();
   TextEditingController operatorController = TextEditingController();
   TextEditingController prodBarcodeController = TextEditingController();
   TextEditingController qtyController = TextEditingController();
   bool checkBoxValue = false;
   bool isLoading = false;
-  final formKey = GlobalKey<FormState>();
+  String scannedQrcode = '';
 
   onBuilderInit() async {}
 
@@ -22,24 +30,39 @@ class ProductionEntryController extends GetxController {
     prodBarcodeController.dispose();
     qtyController.dispose();
   }
+  Future<void> scanQR() async{
+    try{
+      scannedQrcode = await  FlutterBarcodeScanner.scanBarcode('#FFFFFF', 'Cancel', true, ScanMode.QR,);
 
-  Future<void> login() async {
+      Get.snackbar("Result", "QR Code$scannedQrcode", snackPosition: SnackPosition.BOTTOM,backgroundColor: Colors.green, colorText: Colors.white,);
+    }on PlatformException{
+
+    }
+  }
+
+  Future<void> saveProdData(BuildContext context) async {
+    formKey.currentState!.save();
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    saveProductionModelMap['machineNo'] = mcController.text;
+    saveProductionModelMap['operator'] = operatorController.text;
+    saveProductionModelMap['prod_Barcode'] = prodBarcodeController.text;
+    saveProductionModelMap['quantity'] = qtyController.text;
     try {
-      formKey.currentState!.save();
-      if (!formKey.currentState!.validate()) {
-        return;
+      ApiResponse apiResponse =
+          await AdminRepo().saveProduction(saveProductionModelMap);
+      if (checkAPIResponse(apiResponse)) {
+        ApiChecker().successMessageGetX(
+            header: 'Production Data', message: 'Saved Successfully');
       }
-      isLoading = true;
-      update();
     } catch (e) {
       rapidSoftPrint(e);
       Map<String, dynamic> exceptionModelMap = {};
-      exceptionModelMap['methodName'] = 'login';
-      exceptionModelMap['parameter'] = ' ';
+      exceptionModelMap['methodName'] = 'saveData';
+      exceptionModelMap['parameter'] = '$saveProductionModelMap';
       exceptionModelMap['exMessage'] = '$e';
-      //CommonRepo().saveUIException(exceptionModelMap);
     }
-    isLoading = false;
     update();
   }
 }

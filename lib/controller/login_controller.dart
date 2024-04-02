@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../constant/app_constants.dart';
-import '../constant/variable_constant.dart';
 import '../model/response/api_checker.dart';
 import '../model/response/api_response.dart';
 import '../repository/login_repo.dart';
 import '../repository/shared_repo.dart';
 import '../repository/signalrrepo.dart';
-
 
 class LoginController extends GetxController {
   TextEditingController userNameController = TextEditingController();
@@ -33,7 +31,9 @@ class LoginController extends GetxController {
   }
 
   Future<void> login() async {
+
     try {
+      Get.toNamed('/dashboard');
       formKey.currentState!.save();
       if (!formKey.currentState!.validate()) {
         return;
@@ -54,7 +54,7 @@ class LoginController extends GetxController {
           SharedRepo().clearUserNameAndPassword();
         }
         SignalRRepo.initializeConnection();
-        Get.toNamed('/dashboard');
+
         //routeToDashboard();
       } else if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 203) {

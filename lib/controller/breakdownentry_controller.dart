@@ -4,6 +4,7 @@ import '../constant/app_constants.dart';
 import '../constant/variable_constant.dart';
 import '../model/response/api_checker.dart';
 import '../model/response/api_response.dart';
+import '../repository/admin_repo.dart';
 import '../repository/common_repo.dart';
 import '../repository/login_repo.dart';
 import '../repository/shared_repo.dart';
@@ -11,9 +12,11 @@ import '../repository/signalrrepo.dart';
 import '../screen/entry_screen.dart';
 
 class BreakDownEntryController extends GetxController {
+
+  final formKey = GlobalKey<FormState>();
+  Map<String, dynamic> saveBreakDownModelMap = {};
   TextEditingController mcController = TextEditingController();
   TextEditingController operatorController = TextEditingController();
-  TextEditingController qcQtyController = TextEditingController();
   List<String> dropdownItems = [
     '',
     'Power Out',
@@ -21,12 +24,12 @@ class BreakDownEntryController extends GetxController {
   ];
   String dropdownValue = '';
 
-  List<String> dropdownstatusItems = [
+  List<String> dropdownStatusItems = [
     '',
     'OK',
   ];
   // Default value for the dropdown
-  String dropdownstatusValue = '';
+  String dropdownStatusValue = '';
 
   List<String> dropdownItems1 = [
     '',
@@ -34,10 +37,8 @@ class BreakDownEntryController extends GetxController {
     '0 - 60',
   ];
   String dropdownValue1 = '';
-
-  bool checkBoxValue = false;
   bool isLoading = false;
-  final formKey = GlobalKey<FormState>();
+
 
   RxBool saveButtonVisible = false.obs;
 
@@ -54,7 +55,6 @@ class BreakDownEntryController extends GetxController {
     super.onClose();
     mcController.dispose();
     operatorController.dispose();
-    qcQtyController.dispose();
   }
 
   void setDropdownVisibility(bool isVisible) {
@@ -62,23 +62,30 @@ class BreakDownEntryController extends GetxController {
     update();
   }
 
-  Future<void> login() async {
+  Future<void> saveBreakDownData(BuildContext context) async {
+    formKey.currentState!.save();
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    saveBreakDownModelMap['machineNo'] = mcController.text;
+    saveBreakDownModelMap['operator'] = operatorController.text;
+    saveBreakDownModelMap['reason'] = dropdownValue;
+    saveBreakDownModelMap['status'] = dropdownStatusValue;
+
     try {
-      formKey.currentState!.save();
-      if (!formKey.currentState!.validate()) {
-        return;
+      ApiResponse apiResponse =
+      await AdminRepo().saveBreakDown(saveBreakDownModelMap);
+      if (checkAPIResponse(apiResponse)) {
+        ApiChecker().successMessageGetX(
+            header: 'BreakDown Data', message: 'Saved Successfully');
       }
-      isLoading = true;
-      update();
     } catch (e) {
       rapidSoftPrint(e);
       Map<String, dynamic> exceptionModelMap = {};
-      exceptionModelMap['methodName'] = 'login';
-      exceptionModelMap['parameter'] = ' ';
+      exceptionModelMap['methodName'] = 'saveBreakDownData';
+      exceptionModelMap['parameter'] = '$saveBreakDownModelMap';
       exceptionModelMap['exMessage'] = '$e';
-      //CommonRepo().saveUIException(exceptionModelMap);
     }
-    isLoading = false;
     update();
   }
 
