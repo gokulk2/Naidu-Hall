@@ -1,8 +1,8 @@
+import 'package:NaiduHall/constant/variable_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/observers/route_observer.dart';
 import 'package:intl/intl.dart';
-import 'package:mobileapp/constant/variable_constant.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import '../model/response/api_checker.dart';
 import '../model/response/api_response.dart';
@@ -296,12 +296,13 @@ class PMDButton1 extends StatelessWidget {
             cancelEvent(context);
           },
           style: ElevatedButton.styleFrom(
-            primary: Colors.grey, // Change color to your desired color
+            primary: Colors.blue, // Change color to your desired color
             elevation: 5,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
               side: const BorderSide(color: Colors.blueAccent), // Border color
             ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           ),
           child: Text(
             cancelButtonName,
@@ -314,12 +315,13 @@ class PMDButton1 extends StatelessWidget {
             operatorEvent(context);
           },
           style: ElevatedButton.styleFrom(
-            primary: Colors.grey, // Change color to your desired color
+            primary: Colors.orange, // Change color to your desired color
             elevation: 5,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
               side: const BorderSide(color: Colors.blueAccent), // Border color
             ),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
           ),
           child: Text(
             operatorButtonName,
@@ -332,13 +334,14 @@ class PMDButton1 extends StatelessWidget {
           child: ElevatedButton(
             onPressed: saveEnabled ? () => saveEvent(context) : null,
             style: ElevatedButton.styleFrom(
-              primary: saveEnabled ? Colors.grey : Colors.blueGrey,
+              primary: saveEnabled ? Colors.green : Colors.blueGrey,
               // Change color based on saveEnabled
               elevation: 5,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
                 side: const BorderSide(color: Colors.blueAccent), // Border color
               ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             ),
             child: saveEnabled
                 ? Text(

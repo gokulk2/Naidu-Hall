@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:NaiduHall/repository/shared_repo.dart';
 import 'package:get/get.dart';
-import 'package:mobileapp/repository/shared_repo.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
 import 'package:signalr_netcore/hub_connection.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';

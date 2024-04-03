@@ -31,16 +31,16 @@ class LoginScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 50),
+                          padding: const EdgeInsets.symmetric(vertical: 50,horizontal: 12),
                           child: Image.asset(
                             'asset/logo.png', // Make sure this path is correct
-                            height: 200,
-                            width: 200,
+                            height: 100,
+                            width: 150,
                           ),
                         ),
                         const Center(
                           child: Text(
-                            'PRODUCTION MANAGEMENT\nFOR NAIDU HALL',
+                            'Production Management\nFor Naidu Hall',
                             style: TextStyle(
                               color: Color.fromRGBO(53, 49, 97, 1),
                               fontSize: 25,

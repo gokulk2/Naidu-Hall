@@ -199,7 +199,7 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                             Icon(Icons.qr_code),
                             SizedBox(width: 8),
                             Text(
-                              'Scan',
+                              'Scan Machine Barcode',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
@@ -208,7 +208,7 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                       ),
                       const SizedBox(height: 20),
                       const Text(
-                        'M/C #',
+                        'Machine No',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -218,7 +218,7 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                       TextField(
                         controller: controller.mcController,
                         decoration: const InputDecoration(
-                          hintText: 'Enter M/C # here',
+                          hintText: 'Enter Machine No here',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.0),
@@ -228,7 +228,7 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'Operator #',
+                        'Operator Name',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -238,7 +238,7 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                       TextField(
                         controller: controller.operatorController,
                         decoration: const InputDecoration(
-                          hintText: 'Enter Operator #  here',
+                          hintText: 'Enter Operator Name  here',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.0),
@@ -248,7 +248,7 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'Prod.Barcode',
+                        'Product Barcode',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -268,7 +268,7 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'Qty',
+                        'Quantity',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -278,7 +278,7 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                       TextField(
                         controller: controller.qtyController,
                         decoration: const InputDecoration(
-                          hintText: 'Enter Qty here',
+                          hintText: 'Enter Quantity here',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.0),
@@ -308,21 +308,21 @@ class ProductionEntryScreen extends GetView<ProductionEntryController> {
                                       fontSize: 18)),
                             ),
                           ),
-                          SizedBox(
-                            height: 50,
-                            width: 120,
-                            child: MaterialButton(
-                              onPressed: () {
-                                // Handle button press
-                              },
-                              color: Colors.green,
-                              textColor: Colors.white,
-                              child: const Text('Operator',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
-                            ),
-                          ),
+                          // SizedBox(
+                          //   height: 50,
+                          //   width: 120,
+                          //   child: MaterialButton(
+                          //     onPressed: () {
+                          //       // Handle button press
+                          //     },
+                          //     color: Colors.green,
+                          //     textColor: Colors.white,
+                          //     child: const Text('Operator',
+                          //         style: TextStyle(
+                          //             fontWeight: FontWeight.bold,
+                          //             fontSize: 18)),
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 50,
                             width: 120,

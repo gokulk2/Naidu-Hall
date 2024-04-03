@@ -159,10 +159,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:mobileapp/custom_widget/text_form_field.dart';
+
 import '../constant/app_constants.dart';
 import '../controller/breakdownentry_controller.dart';
 import '../custom_widget/alert_message.dart';
+import '../custom_widget/text_form_field.dart';
 import '../model/response/api_checker.dart';
 import '../repository/signalrrepo.dart';
 
@@ -221,7 +222,7 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            // Implement scan functionality here
+                            controller.scanQR();
                           },
                           style: ButtonStyle(
                             backgroundColor:
@@ -235,16 +236,16 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                               Icon(Icons.qr_code),
                               SizedBox(width: 8),
                               Text(
-                                'Scan',
+                                'Scan Machine Barcode',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         const Text(
-                          'M/C #',
+                          'Machine No',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -254,7 +255,7 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                         TextField(
                           controller: controller.mcController,
                           decoration: const InputDecoration(
-                            hintText: 'Enter M/C # here',
+                            hintText: 'Enter Machine No here',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.0),
@@ -264,7 +265,7 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          'Operator #',
+                          'Operator Name',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -274,7 +275,7 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                         TextField(
                           controller: controller.operatorController,
                           decoration: const InputDecoration(
-                            hintText: 'Operator #',
+                            hintText: 'Enter Operator Name here',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.0),
@@ -282,7 +283,7 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 16),
                         const Text(
                           'Reason',
                           style: TextStyle(
@@ -298,7 +299,7 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                             controller.dropdownValue = value!;
                           },
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 16),
                         Visibility(
                           visible: controller.selectedDropDownValue() &&
                               controller.saveButtonVisible.value &&
@@ -319,13 +320,14 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                                 value: controller.dropdownStatusValue,
                                 items: controller.dropdownStatusItems,
                                 onChanged: (value) {
+                                  controller.dropdownStatusValue = value;
                                   controller.operatorEvent(context);
                                 },
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        //const SizedBox(height: 16),
                         Visibility(
                           visible: controller.selectedDropDownValue() &&
                               controller.saveButtonVisible.value &&
@@ -352,8 +354,8 @@ class BreakDownEntryScreen extends GetView<BreakDownEntryController> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 40),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 150),
+                        //const SizedBox(height: 8),
                         PMDButton1(
                           saveEnabled: true,
                           cancelEvent: (context) {

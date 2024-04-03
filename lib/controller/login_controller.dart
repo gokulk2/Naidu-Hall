@@ -15,11 +15,11 @@ class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   onBuilderInit() async {
-    checkBoxValue = await  SharedRepo().getRememberCheck();
+    checkBoxValue = await SharedRepo().getRememberCheck();
     if (checkBoxValue) {
       userNameController.text = SharedRepo().getUserName();
       passwordController.text = SharedRepo().getUserPassword();
-      }
+    }
     update();
   }
 
@@ -31,9 +31,8 @@ class LoginController extends GetxController {
   }
 
   Future<void> login() async {
-
     try {
-      Get.toNamed('/dashboard');
+      Get.toNamed('/entry');
       formKey.currentState!.save();
       if (!formKey.currentState!.validate()) {
         return;
@@ -54,7 +53,6 @@ class LoginController extends GetxController {
           SharedRepo().clearUserNameAndPassword();
         }
         SignalRRepo.initializeConnection();
-
         //routeToDashboard();
       } else if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 203) {
@@ -74,5 +72,3 @@ class LoginController extends GetxController {
     update();
   }
 }
-
-

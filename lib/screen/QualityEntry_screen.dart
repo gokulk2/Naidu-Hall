@@ -61,7 +61,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          // Implement scan functionality here
+                          controller.scanQR();
                         },
                         style: ButtonStyle(
                           backgroundColor:
@@ -75,16 +75,16 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                             Icon(Icons.qr_code),
                             SizedBox(width: 8),
                             Text(
-                              'Scan',
+                              'Scan Machine Barcode',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       const Text(
-                        'M/C #',
+                        'Machine No',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                       TextField(
                         controller: controller.mcController,
                         decoration: const InputDecoration(
-                          hintText: 'Enter M/C # here',
+                          hintText: 'Machine No',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.0),
@@ -104,7 +104,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'Operator #',
+                        'Operator Name',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -114,7 +114,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                       TextField(
                         controller: controller.operatorController,
                         decoration: const InputDecoration(
-                          hintText: 'Enter Operator # here',
+                          hintText: 'Enter Operator Name here',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.0),
@@ -124,7 +124,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'Qty',
+                        'Quantity',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -134,7 +134,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                       TextField(
                         controller: controller.qcQtyController,
                         decoration: const InputDecoration(
-                          hintText: 'Enter Qty here',
+                          hintText: 'Enter Quantity here',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.0),
@@ -142,7 +142,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 16),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -163,7 +163,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 16),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -184,7 +184,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 16),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -226,21 +226,21 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                                       fontSize: 18)),
                             ),
                           ),
-                          SizedBox(
-                            height: 50,
-                            width: 120,
-                            child: MaterialButton(
-                              onPressed: () {
-                                // Handle button press
-                              },
-                              color: Colors.green,
-                              textColor: Colors.white,
-                              child: const Text('Operator',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
-                            ),
-                          ),
+                          // SizedBox(
+                          //   height: 50,
+                          //   width: 120,
+                          //   child: MaterialButton(
+                          //     onPressed: () {
+                          //       // Handle button press
+                          //     },
+                          //     color: Colors.green,
+                          //     textColor: Colors.white,
+                          //     child: const Text('Operator',
+                          //         style: TextStyle(
+                          //             fontWeight: FontWeight.bold,
+                          //             fontSize: 18)),
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 50,
                             width: 120,

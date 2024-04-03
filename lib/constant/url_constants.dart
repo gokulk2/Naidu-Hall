@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import '../repository/shared_repo.dart';
 
 class URLConstants {
-  static const String baseURL = 'https://goodgoldboard21.conveyor.cloud/';
+  static const String baseURL = 'https://greatgreysled16.conveyor.cloud/';
   static const String signalrConnectionID = '';
   static const String signalRBaseURL =
       'https://aicallsevents-demo.hostedapp.in/eventinghub';
@@ -30,4 +30,5 @@ class URLConstants {
   static String saveQualityURI() => 'api/Quality/SaveQty';
 
   static String saveBreakDownURI() => 'api/BreakDown/SaveBreak';
+
 }

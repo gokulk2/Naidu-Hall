@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:mobileapp/constant/app_constants.dart';
-import 'package:mobileapp/constant/color_constants.dart';
+
 
 import '../custom_widget/alert_message.dart';
 import '../model/response/api_checker.dart';
@@ -193,11 +192,12 @@ class EntryScreen extends StatelessWidget {
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text('Select the Entry Screen?',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 80),
+              const SizedBox(height: 60,),
+              const Text('Select the Category',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 100),
               ElevatedButton(
                 onPressed: () {
                   Get.toNamed('/production');
@@ -212,7 +212,7 @@ class EntryScreen extends StatelessWidget {
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(
-                height: 70,
+                height: 90,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -228,7 +228,7 @@ class EntryScreen extends StatelessWidget {
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(
-                height: 70,
+                height: 90,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -250,6 +250,14 @@ class EntryScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
 // class EntryScreen extends StatelessWidget {
 //   const EntryScreen({Key? key});
 //

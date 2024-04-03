@@ -1,5 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../constant/app_constants.dart';
 import '../constant/variable_constant.dart';
 import '../model/response/api_checker.dart';
@@ -41,11 +45,16 @@ class BreakDownEntryController extends GetxController {
 
 
   RxBool saveButtonVisible = false.obs;
+  late CameraController cameraController;
+  late Future<void> cameraInitFuture;
+
+
 
   @override
   void onInit() {
     super.onInit();
     onBuilderInit();
+    initializeCamera();
   }
 
   onBuilderInit() async {}
@@ -60,6 +69,52 @@ class BreakDownEntryController extends GetxController {
   void setDropdownVisibility(bool isVisible) {
     saveButtonVisible.value = isVisible;
     update();
+  }
+  Future<void> initializeCamera() async {
+    // Request camera permission
+    final PermissionStatus cameraPermissionStatus = await Permission.camera.request();
+    if (cameraPermissionStatus.isGranted) {
+      // Get a list of available cameras
+      final cameras = await availableCameras();
+      final frontCamera = cameras.firstWhere((camera) => camera.lensDirection == CameraLensDirection.front);
+
+      // Initialize the camera controller with the front camera
+      cameraController = CameraController(frontCamera, ResolutionPreset.medium);
+      cameraInitFuture = cameraController.initialize();
+    } else {
+      // Handle case where camera permission is denied
+      print('Camera permission denied');
+    }
+  }
+
+  Future<void> scanQR() async {
+    // Ensure that the camera is initialized before scanning QR code
+    await cameraInitFuture;
+
+    try {
+      final scannedQrcode = await FlutterBarcodeScanner.scanBarcode(
+        '#FFFFFF',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
+
+      // if (scannedQrcode != "-1") {
+      //   mcController.text = scannedQrcode;
+      //   // Check if QR scanning was successful
+      //   Get.snackbar(
+      //     "Result",
+      //     "QR Code $scannedQrcode",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.green,
+      //     colorText: Colors.white,
+      //   );
+      // } else {
+      //   print('QR scanning cancelled or failed.');
+      // }
+    } catch (e) {
+      print('Error scanning QR code: $e');
+    }
   }
 
   Future<void> saveBreakDownData(BuildContext context) async {
