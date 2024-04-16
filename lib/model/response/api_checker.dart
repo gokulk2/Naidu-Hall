@@ -1,8 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../constant/app_constants.dart';
 import '../../constant/color_constants.dart';
 import 'api_response.dart';
 

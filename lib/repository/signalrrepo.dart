@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:NaiduHall/repository/shared_repo.dart';
-import 'package:get/get.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
 import 'package:signalr_netcore/hub_connection.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';
@@ -12,7 +9,6 @@ import '../constant/page_enum.dart';
 import '../constant/url_constants.dart';
 import '../constant/variable_constant.dart';
 import '../controller/common/stream_controller_listener.dart';
-import '../controller/master_controller.dart';
 
 typedef HubConnectionProvider = Future<HubConnection> Function();
 
@@ -110,35 +106,6 @@ class SignalRRepo {
               StreamControllerListener().homePageGridRefresher();
             }
           }
-          // if (module.toLowerCase() == "callNote".toLowerCase()) {
-          //   if (currentPage == PageName.aiCalls.name) {
-          //     Get.find<AICallController>().getCallNoteByPhoneNumber();
-          //   } else if (currentPage == PageName.callDetails.name) {
-          //     Get.find<CallDetailsController>().getCallNoteByCallId(id);
-          //     Get.find<CallDetailsController>().getCallDetailsByCallID(id);
-          //   }
-          // }
-          // if (module.toLowerCase() == "callAction".toLowerCase()) {
-          //   if (currentPage == PageName.callDetails.name) {
-          //     Get.find<CallDetailsController>().getCallActionByCallId(id);
-          //   }
-          // }
-          // if (module.toLowerCase() == "department".toLowerCase()) {
-          //   Get.find<MasterController>().getDepartmentForDropdown();
-          // }
-          // if (module.toLowerCase() == "callNature".toLowerCase()) {
-          //   Get.find<MasterController>().getNatureForDropdown();
-          // }
-          // if (module.toLowerCase() == "domainValue".toLowerCase()) {
-          //   Get.find<MasterController>().getDomainValue();
-          // }
-          // if (module.toLowerCase() == "role".toLowerCase()) {
-          //   Get.find<MasterController>().getRoleForDropdown();
-          // }
-          // if (module.toLowerCase() == "CallerAudio".toLowerCase()) {
-          //   Get.find<MasterController>().getAudioForDropdown();
-          // }
-          //Get.find<HomeController>().onBuilderInit();
         }
       });
     }

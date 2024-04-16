@@ -1,12 +1,87 @@
 import 'package:flutter/material.dart';
 
-import '../constant/app_constants.dart';
-import '../constant/color_constants.dart';
-import '../constant/extensions.dart';
-import '../enum/validation_type.dart';
-
 //Using Material UI Design
-
+// class CustomTextField extends StatefulWidget {
+//   final String? hintText;
+//   final IconData? prefixIcon;
+//   final ValueChanged<String>? onChanged;
+//   final ValueChanged<String>? onSubmitted;
+//   final FormFieldValidator<String>? validator;
+//   final TextEditingController? textEditingController;
+//   final TextInputType? keyboardType;
+//
+//   const CustomTextField({
+//     Key? key,
+//     this.hintText,
+//     this.prefixIcon,
+//     this.onChanged,
+//     this.onSubmitted,
+//     this.validator,
+//     this.textEditingController,
+//     this.keyboardType,
+//   }) : super(key: key);
+//
+//   @override
+//   _CustomTextFieldState createState() => _CustomTextFieldState();
+// }
+//
+// class _CustomTextFieldState extends State<CustomTextField> {
+//   late FocusNode _focusNode;
+//   String? _errorText;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _focusNode = FocusNode();
+//     _focusNode.addListener(_validateField);
+//   }
+//
+//   @override
+//   void dispose() {
+//     _focusNode.removeListener(_validateField);
+//     _focusNode.dispose();
+//     super.dispose();
+//   }
+//
+//   void _validateField() {
+//     setState(() {
+//       if (_focusNode.hasFocus) {
+//         // If the field has focus, no error should be shown
+//         _errorText = null;
+//       } else {
+//         // If the field doesn't have focus, show error only if text is empty
+//         _errorText = widget.validator != null &&
+//                 widget.textEditingController!.text.isEmpty
+//             ? widget.validator!(widget.textEditingController!.text)
+//             : null;
+//       }
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextFormField(
+//       controller: widget.textEditingController,
+//       keyboardType: widget.keyboardType,
+//       onChanged: widget.onChanged,
+//       onFieldSubmitted: widget.onSubmitted,
+//       focusNode: _focusNode,
+//       decoration: InputDecoration(
+//         hintText: widget.hintText,
+//         prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
+//         filled: true,
+//         fillColor: Colors.grey[200],
+//         border: OutlineInputBorder(
+//           borderRadius: BorderRadius.circular(10.0),
+//           borderSide: BorderSide.none,
+//         ),
+//         contentPadding:
+//             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+//         errorText: _errorText,
+//       ),
+//     );
+//   }
+// }
 class CustomTextField extends StatefulWidget {
   final String? hintText;
   final IconData? prefixIcon;
@@ -15,6 +90,7 @@ class CustomTextField extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final TextEditingController? textEditingController;
   final TextInputType? keyboardType;
+  final bool readOnly; // Add this line
 
   const CustomTextField({
     Key? key,
@@ -25,6 +101,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.textEditingController,
     this.keyboardType,
+    this.readOnly = false, // Default value is false
   }) : super(key: key);
 
   @override
@@ -57,7 +134,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       } else {
         // If the field doesn't have focus, show error only if text is empty
         _errorText = widget.validator != null &&
-                widget.textEditingController!.text.isEmpty
+            widget.textEditingController!.text.isEmpty
             ? widget.validator!(widget.textEditingController!.text)
             : null;
       }
@@ -72,6 +149,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       onChanged: widget.onChanged,
       onFieldSubmitted: widget.onSubmitted,
       focusNode: _focusNode,
+      readOnly: widget.readOnly, // Set read-only property
       decoration: InputDecoration(
         hintText: widget.hintText,
         prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
@@ -82,7 +160,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderSide: BorderSide.none,
         ),
         contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
         errorText: _errorText,
       ),
     );

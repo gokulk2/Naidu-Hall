@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import '../constant/app_constants.dart';
 import '../controller/qualityentry_controller.dart';
 import '../custom_widget/alert_message.dart';
+import '../custom_widget/logout_handler.dart';
 import '../custom_widget/text_form_field.dart';
-import '../model/response/api_checker.dart';
-import '../repository/signalrrepo.dart';
 
 class QualityEntryScreen extends GetView<QualityEntryController> {
   QualityEntryScreen({super.key});
@@ -14,10 +13,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<QualityEntryController>(
-      initState: (state) {
-        // controller.onBuilderInit();
-      },
+    return GetBuilder<QualityEntryController>(initState: (state) {},
       builder: (controller) {
         return WillPopScope(
           onWillPop: () async {
@@ -28,29 +24,8 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
             return exit;
           },
           child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Quality Entry'),
-              backgroundColor: Colors.red,
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    ApiChecker().functionAlert(
-                      "Logout",
-                      "Are you sure want to Logout?",
-                      () {
-                        SignalRRepo.terminateConnection();
-                        //Navigator.pushNamed(context, '/login');
-                      },
-                    );
-                  },
-                  icon: const Icon(
-                    FontAwesomeIcons.powerOff,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-              ],
-            ),
+            appBar:
+            PMDAppBar(context, 'Quality Entry'),
             body: SingleChildScrollView(
               child: Form(
                 key: controller.formKey,
@@ -59,101 +34,42 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          controller.scanQR();
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.grey),
-                          minimumSize: MaterialStateProperty.all<Size>(
-                              const Size(400, 40)),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Icon(Icons.qr_code),
-                            SizedBox(width: 8),
-                            Text(
-                              'Scan Machine Barcode',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Machine No',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: controller.mcController,
-                        decoration: const InputDecoration(
-                          hintText: 'Machine No',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Operator Name',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: controller.operatorController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter Operator Name here',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Quantity',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: controller.qcQtyController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter Quantity here',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
+                      PMDQRScanButton(onPressed: (){
+                        controller.scanQR();
+                      }),
+                      sizedBox20(),
+                      PMDText(text:'Operator Name'),
+                      sizedBox8(),
+                      PMDTextField(controller: controller.operatorController, hintText: 'Enter Operator Name here'),
+                      sizedBox16(),
+                      PMDText(text: 'Machine No'),
+                      sizedBox8(),
+                      PMDTextField(controller: controller.mcController, hintText: 'Enter Machine No here'),
+                      sizedBox16(),
+                      PMDText(text: 'Quantity'),
+                      sizedBox8(),
+                      PMDTextField(controller: controller.qcQtyController, hintText: 'Enter Quantity here'),
+                      sizedBox16(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Rejection',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          PMDText(text: 'Rejection'),
+                          sizedBox8(),
+                          CustomDropdownFormField(
+                            value: controller.dropdownValue,
+                            items: controller.dropdownItems,
+                            onChanged: (value) {
+                              // controller.operatorEvent(context);
+                            },
                           ),
-                          const SizedBox(height: 8),
+                        ],
+                      ),
+                      sizedBox16(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          PMDText(text: 'Reason'),
+                          sizedBox8(),
                           CustomDropdownFormField(
                             value: controller.dropdownValue,
                             items: controller.dropdownItems,
@@ -167,35 +83,8 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Reason',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          CustomDropdownFormField(
-                            value: controller.dropdownValue,
-                            items: controller.dropdownItems,
-                            onChanged: (value) {
-                              // controller.operatorEvent(context);
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Rework Station',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
+                          PMDText(text: 'Rework Station'),
+                          sizedBox8(),
                           CustomDropdownFormField(
                             value: controller.dropdownValue,
                             items: controller.dropdownItems,
@@ -220,27 +109,9 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                               },
                               color: Colors.blue,
                               textColor: Colors.white,
-                              child: const Text('Clear',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
+                              child: PMDText(text: 'Clear'),
                             ),
                           ),
-                          // SizedBox(
-                          //   height: 50,
-                          //   width: 120,
-                          //   child: MaterialButton(
-                          //     onPressed: () {
-                          //       // Handle button press
-                          //     },
-                          //     color: Colors.green,
-                          //     textColor: Colors.white,
-                          //     child: const Text('Operator',
-                          //         style: TextStyle(
-                          //             fontWeight: FontWeight.bold,
-                          //             fontSize: 18)),
-                          //   ),
-                          // ),
                           SizedBox(
                             height: 50,
                             width: 120,
@@ -250,10 +121,7 @@ class QualityEntryScreen extends GetView<QualityEntryController> {
                               },
                               color: Colors.orange,
                               textColor: Colors.white,
-                              child: const Text('Confirm',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
+                              child: PMDText(text:'Confirm'),
                             ),
                           ),
                         ],

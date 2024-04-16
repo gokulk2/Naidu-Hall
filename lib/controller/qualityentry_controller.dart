@@ -5,15 +5,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../constant/app_constants.dart';
-import '../constant/variable_constant.dart';
 import '../model/response/api_checker.dart';
 import '../model/response/api_response.dart';
 import '../repository/admin_repo.dart';
-import '../repository/common_repo.dart';
-import '../repository/login_repo.dart';
-import '../repository/shared_repo.dart';
-import '../repository/signalrrepo.dart';
-import '../screen/entry_screen.dart';
 
 class QualityEntryController extends GetxController {
   Map<String, dynamic> saveQualityModelMap = {};
@@ -50,13 +44,16 @@ class QualityEntryController extends GetxController {
     operatorController.dispose();
     qcQtyController.dispose();
   }
+
   Future<void> initializeCamera() async {
     // Request camera permission
-    final PermissionStatus cameraPermissionStatus = await Permission.camera.request();
+    final PermissionStatus cameraPermissionStatus =
+        await Permission.camera.request();
     if (cameraPermissionStatus.isGranted) {
       // Get a list of available cameras
       final cameras = await availableCameras();
-      final frontCamera = cameras.firstWhere((camera) => camera.lensDirection == CameraLensDirection.front);
+      final frontCamera = cameras.firstWhere(
+          (camera) => camera.lensDirection == CameraLensDirection.front);
 
       // Initialize the camera controller with the front camera
       cameraController = CameraController(frontCamera, ResolutionPreset.medium);

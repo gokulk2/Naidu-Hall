@@ -5,18 +5,11 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../constant/app_constants.dart';
-import '../constant/variable_constant.dart';
 import '../model/response/api_checker.dart';
 import '../model/response/api_response.dart';
 import '../repository/admin_repo.dart';
-import '../repository/common_repo.dart';
-import '../repository/login_repo.dart';
-import '../repository/shared_repo.dart';
-import '../repository/signalrrepo.dart';
-import '../screen/entry_screen.dart';
 
 class BreakDownEntryController extends GetxController {
-
   final formKey = GlobalKey<FormState>();
   Map<String, dynamic> saveBreakDownModelMap = {};
   TextEditingController mcController = TextEditingController();
@@ -32,7 +25,7 @@ class BreakDownEntryController extends GetxController {
     '',
     'OK',
   ];
-  // Default value for the dropdown
+
   String dropdownStatusValue = '';
 
   List<String> dropdownItems1 = [
@@ -43,12 +36,9 @@ class BreakDownEntryController extends GetxController {
   String dropdownValue1 = '';
   bool isLoading = false;
 
-
   RxBool saveButtonVisible = false.obs;
   late CameraController cameraController;
   late Future<void> cameraInitFuture;
-
-
 
   @override
   void onInit() {
@@ -70,15 +60,15 @@ class BreakDownEntryController extends GetxController {
     saveButtonVisible.value = isVisible;
     update();
   }
-  Future<void> initializeCamera() async {
-    // Request camera permission
-    final PermissionStatus cameraPermissionStatus = await Permission.camera.request();
-    if (cameraPermissionStatus.isGranted) {
-      // Get a list of available cameras
-      final cameras = await availableCameras();
-      final frontCamera = cameras.firstWhere((camera) => camera.lensDirection == CameraLensDirection.front);
 
-      // Initialize the camera controller with the front camera
+  Future<void> initializeCamera() async {
+    final PermissionStatus cameraPermissionStatus =
+        await Permission.camera.request();
+    if (cameraPermissionStatus.isGranted) {
+      final cameras = await availableCameras();
+      final frontCamera = cameras.firstWhere(
+          (camera) => camera.lensDirection == CameraLensDirection.front);
+
       cameraController = CameraController(frontCamera, ResolutionPreset.medium);
       cameraInitFuture = cameraController.initialize();
     } else {
@@ -129,7 +119,7 @@ class BreakDownEntryController extends GetxController {
 
     try {
       ApiResponse apiResponse =
-      await AdminRepo().saveBreakDown(saveBreakDownModelMap);
+          await AdminRepo().saveBreakDown(saveBreakDownModelMap);
       if (checkAPIResponse(apiResponse)) {
         ApiChecker().successMessageGetX(
             header: 'BreakDown Data', message: 'Saved Successfully');
@@ -147,11 +137,9 @@ class BreakDownEntryController extends GetxController {
   void operatorEvent(BuildContext context) {
     if (dropdownValue == 'Power Out') {
       setDropdownVisibility(true);
-    }
-    else if (dropdownValue == 'Partial No Load') {
+    } else if (dropdownValue == 'Partial No Load') {
       setDropdownVisibility(true);
-    }
-    else {
+    } else {
       setDropdownVisibility(false);
     }
   }

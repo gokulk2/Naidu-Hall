@@ -16,11 +16,21 @@ class ExitAlertDialog extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      content: const Text(
-        'Do you want to exit the Entry ?',
-        style: TextStyle(
-          fontSize: 16.0,
-        ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Divider(
+            color: Colors.grey[400],
+            thickness: 1,
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Do you want to exit the Entry?',
+            style: TextStyle(
+              fontSize: 16.0,
+            ),
+          ),
+        ],
       ),
       actions: [
         TextButton(

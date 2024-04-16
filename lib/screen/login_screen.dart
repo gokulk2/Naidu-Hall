@@ -1,3 +1,4 @@
+import 'package:NaiduHall/constant/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/login_controller.dart';
@@ -19,7 +20,6 @@ class LoginScreen extends StatelessWidget {
         return Scaffold(
           key: formKey,
           body: SingleChildScrollView(
-            // Wrap your Column with SingleChildScrollView
             child: Column(
               children: [
                 Padding(
@@ -55,13 +55,12 @@ class LoginScreen extends StatelessWidget {
                           hintText: 'Username',
                           prefixIcon: Icons.person,
                           onChanged: (value) {
-                            // Handle username change
                           },
                           onSubmitted: (value) {
                             loginController.login();
                           },
                           textEditingController:
-                              loginController.userNameController,
+                          loginController.userNameController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter the username';
@@ -81,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                             loginController.login();
                           },
                           textEditingController:
-                              loginController.passwordController,
+                          loginController.passwordController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter the password';
@@ -105,10 +104,8 @@ class LoginScreen extends StatelessWidget {
                             const SizedBox(width: 100),
                             TextButton(
                               onPressed: () {
-                                // Handle forgot password button press
                               },
-                              child: const Text(
-                                'Forgot password?',
+                              child: const Text('Forgot password?',
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -125,12 +122,12 @@ class LoginScreen extends StatelessWidget {
                             loginController.login();
                           },
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero, // Ensure the button fills its content
+                            padding: EdgeInsets.zero,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0), // Optional: You can adjust the border radius
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            elevation: 0, // Optional: Remove elevation
-                            primary: null, // Set primary color to null to use the gradient
+                            //  elevation: 0,
+                            //  primary: null,
                           ),
                           child: Ink(
                             decoration: BoxDecoration(
@@ -142,15 +139,15 @@ class LoginScreen extends StatelessWidget {
                                   Color(0xfffbb448),// Orange
                                 ],
                               ),
-                              borderRadius: BorderRadius.circular(8.0), // Optional: You can adjust the border radius to match the button's shape
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: Container(
-                              constraints: const BoxConstraints(minWidth: 150, minHeight: 50), // Minimum size of the button
+                              constraints: const BoxConstraints(minWidth: 150, minHeight: 50),
                               alignment: Alignment.center,
                               child: loginController.isLoading
                                   ? const CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                              ) // Show loader when loading
+                              )
                                   : const Text(
                                 'Login',
                                 style: TextStyle(
